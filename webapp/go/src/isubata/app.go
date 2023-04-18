@@ -23,8 +23,6 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/middleware"
-	nrecho "github.com/newrelic/go-agent/v3/integrations/nrecho-v3"
-	"github.com/newrelic/go-agent/v3/newrelic"
 )
 
 const (
@@ -723,19 +721,6 @@ func tRange(a, b int64) []int64 {
 }
 
 func main() {
-	fmt.Println("go!!go!!")
-
-	app, err := newrelic.NewApplication(
-		newrelic.ConfigAppName(os.Getenv("NEW_RELIC_APP_NAME")),
-		newrelic.ConfigLicense(os.Getenv("NEW_RELIC_LICENSE_KEY")),
-		newrelic.ConfigAppLogEnabled(false),
-	)
-	if err != nil {
-		fmt.Errorf("failed to init newrelic NewApplication reason: %v", err)
-	} else {
-		fmt.Println("newrelic init success")
-	}
-
 	e := echo.New()
 	funcs := template.FuncMap{
 		"add":    tAdd,
@@ -749,7 +734,6 @@ func main() {
 		Format: "request:\"${method} ${uri}\" status:${status} latency:${latency} (${latency_human}) bytes:${bytes_out}\n",
 	}))
 	e.Use(middleware.Static("../public"))
-	e.Use(nrecho.Middleware(app))
 
 	e.GET("/initialize", getInitialize)
 	e.GET("/", getIndex)
