@@ -1,5 +1,5 @@
 build:
-	go build -v isubata
+	go build -v ./src/isubata
 
 vet:
 	go vet ./src/isubata/...
