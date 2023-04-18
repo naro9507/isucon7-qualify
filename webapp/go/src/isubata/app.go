@@ -723,6 +723,8 @@ func tRange(a, b int64) []int64 {
 }
 
 func main() {
+	fmt.Println("go!!go!!")
+
 	app, err := newrelic.NewApplication(
 		newrelic.ConfigAppName(os.Getenv("NEW_RELIC_APP_NAME")),
 		newrelic.ConfigLicense(os.Getenv("NEW_RELIC_LICENSE_KEY")),
